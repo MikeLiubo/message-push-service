@@ -1,0 +1,115 @@
+logging:
+  level:
+    root: info
+    com.ut.cook.catering.push: info
+  pattern.console: =%date{MM-dd HH:mm:ss}[%thread] %highlight(%-5level) %logger Line:%-3L - %msg%n
+  config: classpath:logback-dev.xml
+
+spring:
+  application:
+    name: message-push-service
+
+  cloud:
+    config:
+      enabled: false
+    zookeeper:
+      connect-string: 127.0.0.1:2181
+      discovery:
+        instance-host: ${spring.cloud.client.ipAddress}
+        enabled: false
+      enabled: false
+
+  jpa:
+    show-sql: true
+    hibernate:
+     ddl-auto: update
+     naming:
+      strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/message_push?characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    druid:
+      max-wait: 30000
+      query-timeout: 10
+      validation-query: SELECT 1
+      use-global-data-source-stat: true
+      stat:
+       log-slow-sql: true
+       slow-sql-millis: 1000
+      slf4j:
+        enabled: true
+        data-source-log-enabled: false
+        connection-log-enabled: false
+        statement-log-enabled: false
+        result-set-log-enabled: false
+      wall:
+        enabled: true
+        log-violation: true
+        throw-exception: false
+        config:
+          delete-where-none-check: true
+      config:
+        enabled: false
+      web-stat:
+       enabled: false
+      aop-stat:
+       enabled: false
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        reset-enable: true
+        login-password: 123456
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+    timeout: 10000
+
+  rabbitmq:
+    host: 127.0.0.1
+    port: 15672
+    username: guest
+    password: guest
+    virtual-host: /
+    publisher-returns: false
+    publisher-confirms: true
+    template:
+      mandatory: true
+
+  cloud.stream.bindings:
+# ---------------- MQ部分 ----------------
+
+    dealPaySuccessOrderGroup:
+      destination: orderFromAll
+      group: message-push-group
+
+  # spring.zipkin
+  zipkin:
+    enabled: true
+    base-url: dev-zipkin.dev:9411
+    service.name: ${spring.application.name}
+
+# token
+cook.admin.token:
+  httpType: https
+  host: 127.0.0.1
+  port: 8080
+  AdminUsername: admin
+  AdminPassword: admin
+
+
+
+platform:
+  service-url:
+    order: 127.0.0.1:6204
+
+
+
+

@@ -1,0 +1,40 @@
+swagger:
+  author: MikeLiubo
+  title: 消息推送服务
+  package: com.message.push #API扫包
+  version: 1.0
+  description: 推送服务
+
+server.port: 17066
+
+
+ribbon:
+  ServerListRefreshInterval: 2000
+  zookeeper:
+    enabled: true
+  ReadTimeout: 15000
+  ConnectTimeout: 15000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 15000
+
+spring:
+  application:
+    name: message-push-service
+
+  sleuth:
+    enabled: true
+    sampler.percentage: 1
+
+  http.multipart.max-file-size: 5MB
+  profiles:
+    active: dev
+
+
+
