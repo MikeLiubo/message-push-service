@@ -88,37 +88,4 @@ public class MessagePushApplication {
         converter.setSupportedMediaTypes(Arrays.asList(mediaTypes));
         return converter;
     }
-
-    /**
-     * 接入Token
-     *
-     * @return
-     */
-    @Bean
-    public RequestInterceptor requestTokenBearerInterceptor() {
-        return (RequestTemplate requestTemplate) -> {
-            try {
-                SecurityContext securityContext = SecurityContextHolder.getContext();
-                Authentication authentication = securityContext.getAuthentication();
-                Map<String, Collection<String>> headers = requestTemplate.headers();
-                // 判断header是否带有token。如果有则取管理员token，没有取用户token。
-                if (!headers.keySet().contains("Authorization")) {
-                    if (authentication != null) {
-                        Object object = authentication.getDetails();
-                        log.info("requestTokenBearerInterceptor object,{}", object);
-                        if (object instanceof OAuth2AuthenticationDetails) {
-                            OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) object;
-                            requestTemplate.header("Authorization", "bearer " + details.getTokenValue());
-                        } else if (object instanceof WebAuthenticationDetails) {
-                            WebAuthenticationDetails details = (WebAuthenticationDetails) object;
-                            log.warn("WebAuthenticationDetails no token, but sessionId " + details.getSessionId());
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-                log.error("token interceptor error", ex);
-            }
-        };
-    }
-
 }
