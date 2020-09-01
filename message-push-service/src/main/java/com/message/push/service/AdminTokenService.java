@@ -52,7 +52,7 @@ public class AdminTokenService {
     @Scheduled(cron = "0 0 * * * ?")
     public void setToken() {
         adminToken = login(tokenConfig.getAdminUsername(), tokenConfig.getAdminPassword());
-        adminToken = login(tokenConfig.getAdminUsername(), tokenConfig.getAdminPassword());
+        log.info("push#login 定时获取token结束");
     }
 
     public String login(String username, String password) {
