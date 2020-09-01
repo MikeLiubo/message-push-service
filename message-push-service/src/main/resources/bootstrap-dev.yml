@@ -62,15 +62,9 @@ spring:
        enabled: false
       stat-view-servlet:
         enabled: true
-        login-username: admin
+        login-username: root
         reset-enable: true
         login-password: 123456
-
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 1
-    timeout: 10000
 
   rabbitmq:
     host: 127.0.0.1
@@ -90,11 +84,6 @@ spring:
       destination: orderFromAll
       group: message-push-group
 
-  # spring.zipkin
-  zipkin:
-    enabled: true
-    base-url: dev-zipkin.dev:9411
-    service.name: ${spring.application.name}
 
 # token
 cook.admin.token:
