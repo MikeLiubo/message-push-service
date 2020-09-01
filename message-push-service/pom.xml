@@ -180,12 +180,6 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
 
     </dependencies>
 
@@ -210,7 +204,7 @@
                 <configuration>
                     <dockerHost>http://127.0.0.1:2375</dockerHost>
                     <serverId>dockerId</serverId>
-                    <registryUrl>reg.utcook.com</registryUrl>
+                    <registryUrl>alibaba.com</registryUrl>
                     <imageName>${project.name}:${project.version}</imageName>
                     <baseImage>openjdk:8-jdk-alpine</baseImage>
                     <resources>
